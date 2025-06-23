@@ -60,12 +60,12 @@ export default function Paso4Resumen({ colores, operaciones, onGuardar, resumen 
     <div className="space-y-6">
       <h2 className="text-xl font-semibold">Agregar operario y Calcular Pagos</h2>
 
-      <table className="w-full border border-gray-300">
+      <table className="w-full table-fixed border border-gray-300">
         <thead>
           <tr className="bg-gray-100">
-            <th className="border p-2">Color</th>
+            <th className="border p-2 w-16">Color</th>
             {operaciones.map((op, i) => (
-              <th key={i} className="border p-2">{op.nombre}</th>
+              <th key={i} className="border p-2 w-16 overflow-hidden truncate">{op.nombre}</th>
             ))}
           </tr>
         </thead>
@@ -74,15 +74,19 @@ export default function Paso4Resumen({ colores, operaciones, onGuardar, resumen 
             <tr key={i}>
               <td className="border p-2 font-semibold">{fila.color}</td>
               {operaciones.map((op, j) => (
-                <td key={j} className="border p-2">
+                <td key={j} className="border p-2 w-16 overflow-hidden">
                   <input
                     type="text"
+                    maxLength={14}
                     placeholder="Nombre"
                     value={fila[op.nombre].nombre}
                     onChange={(e) => actualizarNombre(fila.color, op.nombre, e.target.value)}
-                    className="w-full border px-2 py-1 rounded"
+                    className="border px-1 py-1 text-xs rounded truncate"
+                    style={{ width: "100px" }}  // 👈 ¡Aquí forzamos el ancho real!
                   />
-                  <div className="text-sm text-gray-600">${fila[op.nombre].total}</div>
+
+                  <div className="text-xs text-gray-600 truncate max-w-14">${fila[op.nombre].total}</div>
+
                 </td>
               ))}
             </tr>
