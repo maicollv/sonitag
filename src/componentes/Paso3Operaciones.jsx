@@ -1,5 +1,4 @@
-// src/components/Paso3Operaciones.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const opcionesBase = [
@@ -7,15 +6,33 @@ const opcionesBase = [
   "línea", "tulas", "cuello", "despunte", "bolsillo atrás"
 ];
 
+const operacionesPorDefecto = [
+  { nombre: "bolsillos", valor: 850 },
+  { nombre: "cerrada", valor: 1100 },
+  { nombre: "cremallera", valor: 520 },
+  { nombre: "puño", valor: 150 },
+  { nombre: "caucho abajo", valor: 100 },
+  { nombre: "línea", valor: 250 },
+  { nombre: "tulas", valor: 100 },
+];
+
 export default function Paso3Operaciones({ operaciones, setOperaciones, siguiente }) {
   const navigate = useNavigate();
   const [nombre, setNombre] = useState("");
   const [valor, setValor] = useState("");
 
+  useEffect(() => {
+    if (operaciones.length === 0) {
+      setOperaciones(operacionesPorDefecto);
+    }
+  }, []);
+
   const agregarOperacion = () => {
-    if (!nombre || !valor) return;
-    if (operaciones.find(o => o.nombre === nombre)) return;
-    setOperaciones([...operaciones, { nombre, valor: Number(valor) }]);
+    if (!nombre.trim() || !valor || isNaN(valor)) return;
+
+    if (operaciones.find(o => o.nombre === nombre.trim())) return;
+
+    setOperaciones([...operaciones, { nombre: nombre.trim(), valor: Number(valor) }]);
     setNombre("");
     setValor("");
   };
@@ -29,39 +46,63 @@ export default function Paso3Operaciones({ operaciones, setOperaciones, siguient
   };
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Paso 3: Operaciones</h2>
-      <div className="flex gap-2">
-        <select value={nombre} onChange={(e) => setNombre(e.target.value)} className="border p-2 rounded w-1/2">
-          <option value="">Selecciona una operación</option>
+    <div className="space-y-6 bg-white p-6 rounded-xl shadow-md max-w-md mx-auto">
+      <h2 className="text-2xl font-bold text-center text-gray-800">Operaciones</h2>
+
+      <div className="flex flex-col gap-4">
+        <input
+          list="operaciones-lista"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          placeholder="Nombre de operación"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+        />
+        <datalist id="operaciones-lista">
           {opcionesBase.map((op, i) => (
-            <option key={i} value={op}>{op}</option>
+            <option key={i} value={op} />
           ))}
-        </select>
+        </datalist>
+
         <input
           type="number"
           placeholder="Valor"
           value={valor}
           onChange={(e) => setValor(e.target.value)}
-          className="border p-2 rounded w-1/3"
           min={0}
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
         />
-        <button onClick={agregarOperacion} className="bg-green-600 text-white px-3 py-2 rounded">Agregar</button>
+
+        <button
+          onClick={agregarOperacion}
+          className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition"
+        >
+          Agregar Operación
+        </button>
       </div>
 
-      <ul className="list-disc pl-6">
-        {operaciones.map((op, i) => (
-          <li key={i} className="flex justify-between">
-            <span>{op.nombre}: ${op.valor}</span>
-            <button onClick={() => eliminarOperacion(op.nombre)} className="text-red-600 hover:underline">Eliminar</button>
-          </li>
-        ))}
-      </ul>
+      {operaciones.length > 0 && (
+        <ul className="space-y-2 mt-4">
+          {operaciones.map((op, i) => (
+            <li
+              key={i}
+              className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded shadow-sm"
+            >
+              <span className="text-gray-700">{op.nombre}: <strong>${op.valor}</strong></span>
+              <button
+                onClick={() => eliminarOperacion(op.nombre)}
+                className="text-sm text-red-600 hover:underline"
+              >
+                Eliminar
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <button
         onClick={continuar}
         disabled={operaciones.length === 0}
-        className="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50"
+        className="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition disabled:opacity-50"
       >
         Aceptar
       </button>

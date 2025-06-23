@@ -33,9 +33,12 @@ export default function AppRouter({ cortes, setCortes, corteActual, setCorteActu
   };
 
   const eliminarCorte = (i) => {
-    const restantes = [...cortes];
-    restantes.splice(i, 1);
-    setCortes(restantes);
+    const confirmado = window.confirm("¿Quieres eliminar el corte?");
+    if(confirmado){
+      const restantes = [...cortes];
+      restantes.splice(i, 1);
+      setCortes(restantes);
+    }
   };
 
   const guardarCorte = (resumenFinal) => {
@@ -58,36 +61,69 @@ export default function AppRouter({ cortes, setCortes, corteActual, setCorteActu
   };
 
   return (
-    <main className="p-4 max-w-4xl mx-auto">
+    <main className="min-h-screen bg-gray-50 p-4 sm:p-6 max-w-4xl mx-auto">
       {location.pathname !== "/" && (
-        <nav className="flex gap-4 mb-4 text-sm text-gray-600">
-          <span className={location.pathname === "/paso1" ? "font-bold underline text-blue-600 cursor-pointer" : "cursor-pointer"} onClick={() => navigate("/paso1")}>Paso 1</span>
-          <span className={location.pathname === "/paso2" ? "font-bold underline text-blue-600 cursor-pointer" : "cursor-pointer"} onClick={() => navigate("/paso2")}>Paso 2</span>
-          <span className={location.pathname === "/paso3" ? "font-bold underline text-blue-600 cursor-pointer" : "cursor-pointer"} onClick={() => navigate("/paso3")}>Paso 3</span>
-          <span className={location.pathname === "/paso4" ? "font-bold underline text-blue-600 cursor-pointer" : "cursor-pointer"} onClick={() => navigate("/paso4")}>Paso 4</span>
+        <nav className="flex flex-wrap justify-center gap-4 mb-6">
+          {[
+            { path: "/paso1", label: "Crear corte" },
+            { path: "/paso2", label: "Ingresar Colores" },
+            { path: "/paso3", label: "Operaciones" },
+            { path: "/paso4", label: "Resumen" },
+          ].map((item) => (
+            <button
+              key={item.path}
+              onClick={() => navigate(item.path)}
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
+                location.pathname === item.path
+                  ? "bg-blue-600 text-white shadow"
+                  : "bg-gray-200 text-gray-700 hover:bg-blue-100"
+              }`}
+            >
+              {item.label}
+            </button>
+          ))}
         </nav>
+
       )}
-      <h1 className="text-2xl font-bold mb-4">Sistema de Corte de Chaquetas</h1>
+      <h1 className="text-2xl font-bold mb-4">Sistema de pago de cortes</h1>
 
       {location.pathname === "/" ? (
         <>
-          <button onClick={nuevoCorte} className="mb-4 bg-green-700 text-white px-4 py-2 rounded">+ Nuevo Corte</button>
-
+          <button onClick={nuevoCorte}
+            className="mb-6 bg-green-600 hover:bg-green-700 text-white font-semibold px-5 py-2 rounded-lg transition shadow-md"
+          >
+            + Nuevo Corte
+          </button>
           <div className="mt-8">
             <h2 className="text-lg font-semibold mb-2">Cortes Guardados</h2>
-            <ul className="list-disc pl-5">
+            <div className="grid gap-4">
               {cortes.map((corte, i) => (
-                <li key={i} className="flex justify-between items-center">
-                  <span>
-                    {corte.nombreCorte || `Corte #${i + 1}`} – {corte.colores.length} colores / {corte.operaciones.length} operaciones
-                  </span>
-                  <div className="flex gap-2">
-                    <button onClick={() => editarCorte(i)} className="text-blue-600 hover:underline">Modificar</button>
-                    <button onClick={() => eliminarCorte(i)} className="text-red-600 hover:underline">Eliminar</button>
+                <div key={i} className="bg-white shadow-md rounded-lg p-4 flex justify-between items-center transition hover:shadow-lg">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      {corte.nombreCorte || `Corte #${i + 1}`}
+                    </h3>
+                    <p className="text-sm text-gray-500">
+                      {corte.colores.length} colores • {corte.operaciones.length} operaciones
+                    </p>
                   </div>
-                </li>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => editarCorte(i)}
+                      className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition"
+                    >
+                      Modificar
+                    </button>
+                    <button
+                      onClick={() => eliminarCorte(i)}
+                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
         </>
       ) : (

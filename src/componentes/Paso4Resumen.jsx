@@ -58,7 +58,7 @@ export default function Paso4Resumen({ colores, operaciones, onGuardar, resumen 
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Paso 4: Asignar Operaciones y Calcular Pagos</h2>
+      <h2 className="text-xl font-semibold">Agregar operario y Calcular Pagos</h2>
 
       <table className="w-full border border-gray-300">
         <thead>

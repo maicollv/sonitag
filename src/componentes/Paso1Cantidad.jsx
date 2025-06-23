@@ -1,12 +1,16 @@
-// src/components/Paso1Cantidad.jsx
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Paso1Cantidad({ cantidadTotal, setCantidadTotal, nombreCorte, setNombreCorte, siguiente }) {
+export default function Paso1Cantidad({
+  cantidadTotal,
+  setCantidadTotal,
+  nombreCorte,
+  setNombreCorte,
+  siguiente,
+}) {
   const navigate = useNavigate();
 
   const handleAceptar = () => {
-    if (!nombreCorte || cantidadTotal <= 0) {
+    if (!nombreCorte.trim() || cantidadTotal <= 0) {
       alert("Por favor, ingresa un nombre y una cantidad válida.");
       return;
     }
@@ -14,35 +18,35 @@ export default function Paso1Cantidad({ cantidadTotal, setCantidadTotal, nombreC
   };
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-xl font-semibold">Paso 1: Crear Corte</h2>
+    <div className="space-y-6 bg-white p-6 rounded-xl shadow-md max-w-md mx-auto">
+      <h2 className="text-2xl font-bold text-center text-gray-800">Crear Nuevo Corte</h2>
 
       <div>
-        <label className="font-bold block mb-1">Nombre del Corte:</label>
+        <label className="font-medium text-gray-700 block mb-1">Nombre del Corte:</label>
         <input
           type="text"
           value={nombreCorte}
           onChange={(e) => setNombreCorte(e.target.value)}
           placeholder="Ej: Corte Azul 1"
-          className="border p-2 rounded w-full"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
         />
       </div>
 
       <div>
-        <label className="font-bold block mb-1">Cantidad Total de Chaquetas:</label>
+        <label className="font-medium text-gray-700 block mb-1">Cantidad Total de Chaquetas:</label>
         <input
           type="number"
           placeholder="Cantidad"
-          value={cantidadTotal}
+          value={cantidadTotal > 0 ? cantidadTotal : ""}
           onChange={(e) => setCantidadTotal(Number(e.target.value))}
           min={1}
-          className="border p-2 rounded w-1/3"
+          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
         />
       </div>
 
       <button
         onClick={handleAceptar}
-        className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition"
       >
         Aceptar
       </button>
