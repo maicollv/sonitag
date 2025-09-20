@@ -168,87 +168,89 @@ export default function Paso4Resumen({
             {tabla.map((fila, rowIndex) => {
               const band = colorFromString(String(fila.color));
               return (
-                <tr key={rowIndex}>
-                  <td
-                    className="sticky left-0 z-30 border p-2 font-semibold text-center"
-                    style={{
-                      background: band.bg,
-                      borderLeft: `6px solid ${band.border}`,
-                      minWidth: 120,
-                      color: "#000",
-                    }}
-                  >
-                    {fila.color}
-                  </td>
+                <tr
+                key={rowIndex}
+                style={{
+                  background: band.bg, // 👈 ahora toda la fila tiene fondo
+                  color: band.text,    // 👈 texto dinámico (negro o blanco)
+                }}
+              >
+                <td
+                  className="sticky left-0 z-30 border p-2 font-semibold text-center"
+                  style={{
+                    borderLeft: `6px solid ${band.border}`,
+                    minWidth: 120,
+                    background: band.bg, // 👈 importante repetir para el sticky
+                    color: "#000",
+                  }}
+                >
+                  {fila.color}
+                </td>
 
-                  {operaciones.map((op, colIndex) => {
-                    const personas = fila[op.nombre] || [];
-                    return (
-                      <td key={colIndex} className="border p-2 align-top">
-                        {personas.map((p, idx) => (
-                          <div key={idx} className="mb-2">
-                            {/* cantidad + nombre + botones en la misma fila */}
-                            <div className="celda">
-                              <input
-                                type="number"
-                                min={0}
-                                value={p.cantidad}
-                                onChange={(e) =>
-                                  actualizarPersona(
-                                    fila.color,
-                                    op.nombre,
-                                    idx,
-                                    "cantidad",
-                                    e.target.value
-                                  )
-                                }
-                                placeholder="#"
-                              />
-
-                              <input
-                                type="text"
-                                value={p.nombre}
-                                onChange={(e) =>
-                                  actualizarPersona(
-                                    fila.color,
-                                    op.nombre,
-                                    idx,
-                                    "nombre",
-                                    e.target.value
-                                  )
-                                }
-                                placeholder="Nombre"
-                              />
-
-                              <button
-                                onClick={() =>
-                                  eliminarOperario(fila.color, op.nombre, idx)
-                                }
-                                className="text-red-600 font-bold"
-                                title="Eliminar operario"
-                              >
-                                ✕
-                              </button>
-
-                              <button
-                                onClick={() =>
-                                  agregarOperario(fila.color, op.nombre)
-                                }
-                                className="text-green-600 font-bold"
-                                title="Agregar operario"
-                              >
-                                +
-                              </button>
-                            </div>
-
-                            {/* total debajo */}
-                            <div className="total">${p.total}</div>
+                {operaciones.map((op, colIndex) => {
+                  const personas = fila[op.nombre] || [];
+                  return (
+                    <td key={colIndex} className="border p-2 align-top">
+                      {personas.map((p, idx) => (
+                        <div key={idx} className="mb-2">
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="number"
+                              min={0}
+                              value={p.cantidad}
+                              onChange={(e) =>
+                                actualizarPersona(
+                                  fila.color,
+                                  op.nombre,
+                                  idx,
+                                  "cantidad",
+                                  e.target.value
+                                )
+                              }
+                              className="border px-1 py-0.5 text-xs rounded w-10 text-center"
+                            />
+                            <input
+                              type="text"
+                              value={p.nombre}
+                              onChange={(e) =>
+                                actualizarPersona(
+                                  fila.color,
+                                  op.nombre,
+                                  idx,
+                                  "nombre",
+                                  e.target.value
+                                )
+                              }
+                              className="border px-2 py-0.5 text-sm rounded flex-1"
+                              placeholder="Nombre"
+                            />
+                            <button
+                              onClick={() =>
+                                eliminarOperario(fila.color, op.nombre, idx)
+                              }
+                              className="text-red-600 font-bold text-sm"
+                            >
+                              ✕
+                            </button>
+                            <button
+                              onClick={() =>
+                                agregarOperario(fila.color, op.nombre)
+                              }
+                              className="text-green-600 font-bold text-sm"
+                            >
+                              +
+                            </button>
                           </div>
-                        ))}
-                      </td>
-                    );
-                  })}
-                </tr>
+                          <div className="text-xs text-gray-800 mt-1 font-semibold">
+                            ${p.total}
+                          </div>
+                        </div>
+                      ))}
+                    </td>
+                  );
+                })}
+              </tr>
+
               );
             })}
           </tbody>

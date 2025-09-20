@@ -18,45 +18,48 @@
   font-weight: bold;
 }
 
-
-/* Fila de celdas */
+/* Fila de producto */
 .tabla-fila {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: flex;              /* 👈 cambia de grid a flex */
+  align-items: center;
+  gap: 8px;                   /* separación entre columnas */
+  padding: 4px;
+  border-bottom: 1px solid #333;
 }
 
-/* Cada celda en una fila horizontal */
+/* Celda general */
 .celda {
   display: flex;
-  flex-direction: row;  /* ahora en fila */
   align-items: center;
   gap: 4px;
   border: 1px solid #444;
   padding: 6px;
-  margin: 2px;
-  width: 220px; /* más ancho para inputs */
   font-size: 12px;
   background-color: #111;
   color: white;
   border-radius: 6px;
 }
 
-/* Inputs */
-.celda input[type="number"] {
-  width: 30px;
-  height: 22px;
-  font-size: 11px;
-  text-align: center;
+/* Nombre más ancho */
+.celda.nombre {
+  flex: 2;                    /* ocupa más espacio */
+  font-weight: bold;
+  color: white;               /* 👈 aseguramos texto blanco */
 }
 
-.celda input[type="text"] { 
-  width: 60px;
-  height: 22px;
-  font-size: 13px;
-  text-align: center;
+/* Cantidad */
+.celda.cantidad {
+  flex: 1;
+  justify-content: center;
 }
 
-/* Botones */
+/* Botones X y + */
+.celda.botones {
+  flex: 1;
+  justify-content: center;
+  gap: 6px;
+}
+
 .celda button {
   width: 22px;
   height: 22px;
@@ -69,9 +72,35 @@
   justify-content: center;
 }
 
+/* Inputs */
+.celda input[type="number"] {
+  width: 10px;
+  height: 22px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.celda input[type="text"] { 
+  width: 60px;
+  height: 22px;
+  font-size: 13px;
+  text-align: center;
+}
+
 /* Totales debajo */
 .total {
   font-size: 11px;
   color: #aaa;
   margin-top: 2px;
+}
+
+.tabla-contenedor table input[type="number"],
+.tabla-contenedor table input[type="text"] {
+  max-width: 60px;
+  font-size: 12px;
+  padding: 2px 4px;
+}
+
+.tabla-contenedor table td {
+  white-space: nowrap; /* evita saltos de línea */
 }
