@@ -23,9 +23,17 @@ export default function Paso2Colores({ cantidadTotal, colores, setColores, sigui
     const numCantidad = Number(cantidad);
 
     if (!colorNombre || isNaN(numCantidad) || numCantidad <= 0 || numCantidad > restante) return;
-    if (colores.find(c => c.color === colorNombre)) return;
 
-    setColores([...colores, { color: colorNombre, cantidad: numCantidad }]);
+    // Contar cuántos colores existentes empiezan con este nombre
+    const existentes = colores.filter(c => c.color.startsWith(colorNombre));
+    let nombreFinal = colorNombre;
+
+    if (existentes.length > 0) {
+      // El primero se queda igual, los siguientes van con número
+      nombreFinal = `${colorNombre} ${existentes.length}`;
+    }
+
+    setColores([...colores, { color: nombreFinal, cantidad: numCantidad }]);
     setColor("");
     setCantidad("");
   };
@@ -41,7 +49,9 @@ export default function Paso2Colores({ cantidadTotal, colores, setColores, sigui
   return (
     <div className="space-y-6 bg-white p-6 rounded-xl shadow-md max-w-md mx-auto">
       <h2 className="text-2xl font-bold text-gray-800 text-center">Paso 2: Ingresar Colores</h2>
-      <p className="text-center text-gray-600">Total por asignar: <strong>{restante}</strong></p>
+      <p className="text-center text-gray-600">
+        Total por asignar: <strong>{restante}</strong>
+      </p>
 
       <div className="flex flex-col gap-4">
         <input
@@ -80,8 +90,13 @@ export default function Paso2Colores({ cantidadTotal, colores, setColores, sigui
       {colores.length > 0 && (
         <ul className="space-y-2 mt-4">
           {colores.map((c, i) => (
-            <li key={i} className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded shadow-sm">
-              <span className="capitalize text-gray-700">{c.color}: <strong>{c.cantidad}</strong></span>
+            <li
+              key={i}
+              className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded shadow-sm"
+            >
+              <span className="capitalize text-gray-700">
+                {c.color}: <strong>{c.cantidad}</strong>
+              </span>
               <button
                 onClick={() => eliminarColor(c.color)}
                 className="text-sm text-red-600 hover:underline"

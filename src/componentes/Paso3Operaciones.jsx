@@ -41,6 +41,15 @@ export default function Paso3Operaciones({ operaciones, setOperaciones, siguient
     setOperaciones(operaciones.filter(op => op.nombre !== n));
   };
 
+  // 🔹 Nuevo: actualizar valor en edición
+  const editarOperacion = (n, nuevoValor) => {
+    setOperaciones(
+      operaciones.map(op =>
+        op.nombre === n ? { ...op, valor: Number(nuevoValor) } : op
+      )
+    );
+  };
+
   const continuar = () => {
     if (operaciones.length > 0) navigate(siguiente);
   };
@@ -87,10 +96,20 @@ export default function Paso3Operaciones({ operaciones, setOperaciones, siguient
               key={i}
               className="flex justify-between items-center bg-gray-100 px-4 py-2 rounded shadow-sm"
             >
-              <span className="text-gray-700">{op.nombre}: <strong>${op.valor}</strong></span>
+              <span className="text-gray-700">{op.nombre}:</span>
+              
+              {/* 🔹 Campo editable */}
+              <input
+                type="number"
+                value={op.valor}
+                min={0}
+                onChange={(e) => editarOperacion(op.nombre, e.target.value)}
+                className="w-24 p-1 border border-gray-300 rounded text-center"
+              />
+
               <button
                 onClick={() => eliminarOperacion(op.nombre)}
-                className="text-sm text-red-600 hover:underline"
+                className="text-sm text-red-600 hover:underline ml-3"
               >
                 Eliminar
               </button>

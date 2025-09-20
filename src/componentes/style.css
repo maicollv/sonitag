@@ -1,0 +1,77 @@
+/* Contenedor principal con scroll */
+.tabla-contenedor {
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid #444;
+}
+
+/* Encabezado fijo */
+.tabla-encabezado,
+.tabla-contenedor thead th {
+  position: sticky;
+  top: 0;
+  background-color: #222; /* color sólido */
+  color: white;
+  z-index: 10;
+  text-align: center;
+  padding: 8px;
+  font-weight: bold;
+}
+
+
+/* Fila de celdas */
+.tabla-fila {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+/* Cada celda en una fila horizontal */
+.celda {
+  display: flex;
+  flex-direction: row;  /* ahora en fila */
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #444;
+  padding: 6px;
+  margin: 2px;
+  width: 220px; /* más ancho para inputs */
+  font-size: 12px;
+  background-color: #111;
+  color: white;
+  border-radius: 6px;
+}
+
+/* Inputs */
+.celda input[type="number"] {
+  width: 30px;
+  height: 22px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.celda input[type="text"] { 
+  width: 60px;
+  height: 22px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Botones */
+.celda button {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  font-size: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Totales debajo */
+.total {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 2px;
+}
