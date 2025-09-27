@@ -148,7 +148,7 @@ export default function Paso4Resumen({
             <tr>
               <th
                 className="sticky left-0 top-0 z-40 bg-gray-800 text-white border p-2 w-28 text-center"
-                style={{ minWidth: 120 }}
+                style={{ minWidth: 80 }}
               >
                 Color
               </th>
@@ -156,7 +156,7 @@ export default function Paso4Resumen({
                 <th
                   key={i}
                   className="sticky top-0 bg-gray-800 text-white border p-2 text-center"
-                  style={{ minWidth: 220 }}
+                  style={{ minWidth: 160 }}
                 >
                   {op.nombre}
                 </th>
@@ -193,7 +193,7 @@ export default function Paso4Resumen({
                     <td key={colIndex} className="border p-2 align-top">
                       {personas.map((p, idx) => (
                         <div key={idx} className="mb-2">
-                          <div className="flex items-center gap-2">
+                          <div className="fila-operario">
                             <input
                               type="number"
                               min={0}
@@ -207,7 +207,7 @@ export default function Paso4Resumen({
                                   e.target.value
                                 )
                               }
-                              className="border px-1 py-0.5 text-xs rounded w-10 text-center"
+                              className="celda-numero"
                             />
                             <input
                               type="text"
@@ -221,30 +221,27 @@ export default function Paso4Resumen({
                                   e.target.value
                                 )
                               }
-                              className="border px-2 py-0.5 text-sm rounded flex-1"
+                              className="celda-nombre"
                               placeholder="Nombre"
                             />
                             <button
-                              onClick={() =>
-                                eliminarOperario(fila.color, op.nombre, idx)
-                              }
-                              className="text-red-600 font-bold text-sm"
+                              onClick={() => eliminarOperario(fila.color, op.nombre, idx)}
+                              className="btn-eliminar"
                             >
                               ✕
                             </button>
                             <button
-                              onClick={() =>
-                                agregarOperario(fila.color, op.nombre)
-                              }
-                              className="text-green-600 font-bold text-sm"
+                              onClick={() => agregarOperario(fila.color, op.nombre)}
+                              className="btn-agregar"
                             >
                               +
                             </button>
                           </div>
-                          <div className="text-xs text-gray-800 mt-1 font-semibold">
+                          <div className="total">
                             ${p.total}
                           </div>
                         </div>
+
                       ))}
                     </td>
                   );

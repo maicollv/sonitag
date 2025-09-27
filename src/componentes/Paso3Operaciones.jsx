@@ -2,18 +2,17 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const opcionesBase = [
-  "bolsillos", "cerrada", "cremallera", "puño", "caucho abajo",
-  "línea", "tulas", "cuello", "despunte", "bolsillo atrás"
+  "bolsillos", "cerrada", "cremallera", "terminacion", "puño", "caucho abajo",
+  "línea", "tulas", "cuello", "despunte", "bolsillo atrás", "capota y tula"
 ];
 
 const operacionesPorDefecto = [
   { nombre: "bolsillos", valor: 850 },
-  { nombre: "cerrada", valor: 1100 },
+  { nombre: "cerrada", valor: 900 },
   { nombre: "cremallera", valor: 520 },
-  { nombre: "puño", valor: 150 },
-  { nombre: "caucho abajo", valor: 100 },
-  { nombre: "línea", valor: 250 },
+  { nombre: "terminacion", valor: 500},
   { nombre: "tulas", valor: 100 },
+  { nombre: "capota y tula", valor: 200},
 ];
 
 export default function Paso3Operaciones({ operaciones, setOperaciones, siguiente }) {

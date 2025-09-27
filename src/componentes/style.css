@@ -1,16 +1,14 @@
-/* Contenedor principal con scroll */
+/* Contenedor tabla */
 .tabla-contenedor {
   max-height: 80vh;
   overflow-y: auto;
   border: 1px solid #444;
 }
 
-/* Encabezado fijo */
-.tabla-encabezado,
 .tabla-contenedor thead th {
   position: sticky;
   top: 0;
-  background-color: #222; /* color sólido */
+  background-color: #222;
   color: white;
   z-index: 10;
   text-align: center;
@@ -18,89 +16,69 @@
   font-weight: bold;
 }
 
-/* Fila de producto */
-.tabla-fila {
-  display: flex;              /* 👈 cambia de grid a flex */
-  align-items: center;
-  gap: 8px;                   /* separación entre columnas */
-  padding: 4px;
-  border-bottom: 1px solid #333;
-}
-
-/* Celda general */
-.celda {
+/* Fila de inputs (cantidad, nombre, botones) */
+.fila-operario {
   display: flex;
   align-items: center;
-  gap: 4px;
-  border: 1px solid #444;
-  padding: 6px;
-  font-size: 12px;
-  background-color: #111;
-  color: white;
-  border-radius: 6px;
-}
-
-/* Nombre más ancho */
-.celda.nombre {
-  flex: 2;                    /* ocupa más espacio */
-  font-weight: bold;
-  color: white;               /* 👈 aseguramos texto blanco */
-}
-
-/* Cantidad */
-.celda.cantidad {
-  flex: 1;
-  justify-content: center;
-}
-
-/* Botones X y + */
-.celda.botones {
-  flex: 1;
-  justify-content: center;
   gap: 6px;
 }
 
-.celda button {
+/* Input numérico */
+.celda-numero {
+  width: 28px;
+  height: 22px;
+  font-size: 11px;
+  text-align: center;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+/* Input de nombre */
+.celda-nombre {
+  width: 70px;
+  height: 22px;
+  font-size: 12px;
+  text-align: center;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+/* Botón eliminar */
+.btn-eliminar {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #b91c1c;
+  border-radius: 4px;
+  font-size: 12px;
   width: 22px;
   height: 22px;
-  margin: 0;
-  font-size: 12px;
-  border-radius: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Inputs */
-.celda input[type="number"] {
-  width: 10px;
+/* Botón agregar */
+.btn-agregar {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #15803d;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 22px;
   height: 22px;
-  font-size: 11px;
-  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.celda input[type="text"] { 
-  width: 60px;
-  height: 22px;
-  font-size: 13px;
-  text-align: center;
-}
-
-/* Totales debajo */
+/* Total debajo */
 .total {
   font-size: 11px;
-  color: #aaa;
+  color: black;
+  font-weight: 600;
   margin-top: 2px;
-}
-
-.tabla-contenedor table input[type="number"],
-.tabla-contenedor table input[type="text"] {
-  max-width: 60px;
-  font-size: 12px;
-  padding: 2px 4px;
-}
-
-.tabla-contenedor table td {
-  white-space: nowrap; /* evita saltos de línea */
 }
